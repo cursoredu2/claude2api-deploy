@@ -50,6 +50,18 @@ services:
       timeout: 5s
       retries: 5
 
+  watchtower:
+    image: containrrr/watchtower
+    container_name: claude2api-watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - WATCHTOWER_POLL_INTERVAL=600
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_INCLUDE_STOPPED=false
+    command: claude2api
+
 volumes:
   postgres_data:
   redis_data:
